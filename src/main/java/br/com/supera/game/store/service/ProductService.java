@@ -18,9 +18,17 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper = ProductMapper.INSTANCE;
 
-    public List<ProductDTO> listAll() {
+    public List<ProductDTO> listAll(String orderBy) {
         List<Product> products = new ArrayList<>();
-        products = productRepository.findAll();
+        if (orderBy.equals("score")) {
+            products = productRepository.findAllByOrderByScore();
+        } else if (orderBy.equals("name")) {
+            products = productRepository.findAllByOrderByName();
+        } else if (orderBy.equals("price")) {
+            products = productRepository.findAllByOrderByPrice();
+        } else {
+            products = productRepository.findAll();
+        }
         return products
                 .stream()
                 .map(productMapper::toDTO)

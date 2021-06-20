@@ -4,6 +4,7 @@ import br.com.supera.game.store.dto.ProductDTO;
 import br.com.supera.game.store.service.ProductService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,7 +20,7 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping
-    public List<ProductDTO> listProducts() {
-        return productService.listAll();
+    public List<ProductDTO> listProducts(@Param("orderBy") String orderBy) {
+        return productService.listAll(orderBy);
     }
 }
