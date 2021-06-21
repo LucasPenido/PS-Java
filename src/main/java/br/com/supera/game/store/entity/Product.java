@@ -4,9 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Data
 @Entity
@@ -14,20 +13,20 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class Product {
 
-   @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
-   private long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
-   @Column(nullable = false, unique = true)
-   private String name;
+    @Column(nullable = false, unique = true)
+    private String name;
 
-   @Column(nullable = false)
-   private BigDecimal price;
+    @Column(nullable = false)
+    private BigDecimal price;
 
-   @Column(nullable = false)
-   private short score;
+    @Column(nullable = false)
+    private short score;
 
-   @Column(nullable = false)
-   private String image;
+    @Column(nullable = false)
+    private String image;
 
 }
