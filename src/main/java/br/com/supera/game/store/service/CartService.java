@@ -63,7 +63,7 @@ public class CartService {
         Cart checkCart = cartRepository.getById(cartId);
         CartDTO cartDTO = cartMapper.toDTO(checkCart);
 
-        // Verifies if exists the product at cart, and if exists, add to the quantity.
+        // Verifies if the product exists at cart, and if exists, add to the quantity.
         for (ProductsCart productsCart :
                 checkCart.getProductsCart()) {
             if (productsCart.getProduct().getId() == productsCartDTO.getProduct().getId()) {
@@ -73,7 +73,7 @@ public class CartService {
             }
         }
 
-        ProductsCart productsCart = productsCartService.addProductToCart(
+        ProductsCart productsCart = productsCartService.updateProductCart(
                 new ProductsCart(cart,
                         productMapper.toModel(
                                 productService.getProductById(productsCartDTO.getProduct().getId())),
@@ -89,6 +89,59 @@ public class CartService {
         } else {
             cartDTO.getProductsCart().add(new ProductsCartDTO(productsCart.getQuantity(),
                     productMapper.toDTO(productsCart.getProduct())));
+        }
+
+        return cartDTO;
+    }
+
+    public CartDTO removeProductFromCart(ProductsCartDTO productsCartDTO, long cartId) {
+        Cart cart = new Cart();
+        cart.setId(cartId);
+        boolean productExists = false;
+        boolean removeProduct = false;
+
+        Cart checkCart = cartRepository.getById(cartId);
+        CartDTO cartDTO = cartMapper.toDTO(checkCart);
+        ProductsCart newProductsCart = new ProductsCart();
+        ProductsCart productsCartToremove = new ProductsCart();
+
+        // Verifies if the product exists at cart, and if exists, subtract from the quantity.
+        for (ProductsCart productsCart :
+                checkCart.getProductsCart()) {
+            if (productsCart.getProduct().getId() == productsCartDTO.getProduct().getId()) {
+                int newQuantity = productsCart.getQuantity() - productsCartDTO.getQuantity();
+                if (newQuantity <= 0) {
+                    removeProduct = true;
+                    productsCartToremove = new ProductsCart(cart,
+                            productMapper.toModel(
+                                    productService.getProductById(productsCartDTO.getProduct().getId())),
+                            productsCartDTO.getQuantity());
+                    productsCartService.remove(productsCartToremove);
+                } else {
+                    productsCartDTO.setQuantity(newQuantity);
+                    productsCartService.updateProductCart(
+                            new ProductsCart(cart,
+                                    productMapper.toModel(
+                                            productService.getProductById(productsCartDTO.getProduct().getId())),
+                                    productsCartDTO.getQuantity()));
+                }
+                productExists = true;
+                break;
+            }
+        }
+
+        if (productExists) {
+            if (removeProduct) {
+                cartDTO.getProductsCart().remove(productCartMapper.toDTO(productsCartToremove));
+            } else {
+                for (ProductsCartDTO productsCartDTO1 :
+                        cartDTO.getProductsCart()) {
+                    if (productsCartDTO1.getProduct().getId() == productsCartDTO.getProduct().getId()) {
+                        productsCartDTO1.setQuantity(productsCartDTO.getQuantity());
+                        break;
+                    }
+                }
+            }
         }
 
         return cartDTO;

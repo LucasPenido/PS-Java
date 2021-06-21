@@ -39,4 +39,9 @@ public class CartController {
     public CartDTO addProductToCart(@RequestBody ProductsCartDTO productsCartDTO, @PathVariable long cartId) {
         return cartService.addProductToCart(productsCartDTO, cartId);
     }
+
+    @DeleteMapping("/{cartId}")
+    public CartDTO removeProductFromCart(@RequestBody ProductsCartDTO productsCartDTO, @PathVariable long cartId) {
+        return cartService.removeProductFromCart(productsCartDTO, cartId);
+    }
 }
