@@ -8,3 +8,6 @@ INSERT INTO PRODUCT (ID, NAME, PRICE, SCORE, IMAGE) VALUES
     (31, 'Terra Média: Sombras de Mordor', 79.99, 50, 'terra-media-sombras-de-mordor.png'),
     (420, 'FIFA 18', 195.39, 325, 'fifa-18.png'),
     (501, 'Horizon Zero Dawn', 115.8, 290, 'horizon-zero-dawn.png');
+
+INSERT INTO USER (CPF, NAME, EMAIL) VALUES
+    ('83746195633', 'Usuário Teste', 'teste@teste.com');
