@@ -1,12 +1,14 @@
 package br.com.supera.game.store.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -25,8 +27,8 @@ public class Cart {
     @ManyToOne
     private User user;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "cart")
+    @JsonManagedReference
+    @OneToMany(mappedBy = "id.cart")
     private List<ProductsCart> productsCart = new ArrayList<>();
 
     @Transient

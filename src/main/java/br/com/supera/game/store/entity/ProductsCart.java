@@ -1,6 +1,7 @@
 package br.com.supera.game.store.entity;
 
 import br.com.supera.game.store.key.ProductsCartKey;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,15 +16,13 @@ import javax.persistence.*;
 public class ProductsCart {
 
     @EmbeddedId
+    @JsonIgnore
     private ProductsCartKey id;
 
-    @ManyToOne
-    @MapsId("productId")
-    private Product product;
-
-    @ManyToOne
-    @MapsId("cartId")
-    private Cart cart;
-
     private int quantity;
+
+    @Transient
+    public Product getProduct() {
+        return this.id.getProduct();
+    }
 }
