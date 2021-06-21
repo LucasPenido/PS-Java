@@ -34,4 +34,8 @@ public class ProductService {
                 .map(productMapper::toDTO)
                 .collect(Collectors.toList());
     }
+
+    public ProductDTO getProductById(long productId) {
+        return productMapper.toDTO(productRepository.getById(productId));
+    }
 }

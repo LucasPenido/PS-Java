@@ -1,6 +1,7 @@
 package br.com.supera.game.store.controller;
 
 import br.com.supera.game.store.dto.CartDTO;
+import br.com.supera.game.store.dto.ProductsCartDTO;
 import br.com.supera.game.store.dto.UserDTO;
 import br.com.supera.game.store.exception.UserNotFoundException;
 import br.com.supera.game.store.service.CartService;
@@ -31,5 +32,11 @@ public class CartController {
     @ResponseStatus(HttpStatus.CREATED)
     public CartDTO createCart(@RequestBody UserDTO userDTO) throws UserNotFoundException {
         return cartService.createCart(userDTO);
+    }
+
+    @PostMapping("/{cartId}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public CartDTO addProductToCart(@RequestBody ProductsCartDTO productsCartDTO, @PathVariable long cartId) {
+        return cartService.addProductToCart(productsCartDTO, cartId);
     }
 }

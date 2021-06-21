@@ -21,6 +21,13 @@ public class ProductsCart {
 
     private int quantity;
 
+    public ProductsCart(Cart cart, Product product, int quantity) {
+        id = new ProductsCartKey();
+        id.setCart(cart);
+        id.setProduct(product);
+        this.quantity = quantity;
+    }
+
     @Transient
     public Product getProduct() {
         return this.id.getProduct();
