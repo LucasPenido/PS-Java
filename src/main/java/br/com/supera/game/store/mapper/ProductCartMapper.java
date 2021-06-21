@@ -9,11 +9,5 @@ import org.mapstruct.factory.Mappers;
 public interface ProductCartMapper {
     ProductCartMapper INSTANCE = Mappers.getMapper(ProductCartMapper.class);
 
-    default ProductsCartDTO toDTO(ProductsCart productsCart) {
-        ProductsCartDTO productsCartDTO = new ProductsCartDTO();
-        productsCartDTO.setQuantity(productsCart.getQuantity());
-        productsCartDTO.setProduct(productsCart.getProduct());
-
-        return productsCartDTO;
-    }
+    ProductsCartDTO toDTO(ProductsCart productsCart);
 }

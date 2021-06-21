@@ -15,9 +15,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CartDTO {
-    private long cartId;
+    private long id;
     private Date dateCreated;
-    private User user;
+    private UserDTO user;
     private List<ProductsCartDTO> productsCart = new ArrayList<>();
     private int quantity;
 }
