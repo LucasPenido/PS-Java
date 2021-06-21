@@ -20,14 +20,14 @@ public class ProductService {
 
     public List<ProductDTO> listAll(String orderBy) {
         List<Product> products = new ArrayList<>();
-        if (orderBy.equals("score")) {
+        if (orderBy == null) {
+            products = productRepository.findAll();
+        } else if (orderBy.equals("score")) {
             products = productRepository.findAllByOrderByScore();
         } else if (orderBy.equals("name")) {
             products = productRepository.findAllByOrderByName();
         } else if (orderBy.equals("price")) {
             products = productRepository.findAllByOrderByPrice();
-        } else {
-            products = productRepository.findAll();
         }
         return products
                 .stream()
