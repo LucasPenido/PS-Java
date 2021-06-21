@@ -16,18 +16,18 @@ public class Product {
 
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
-   public long id;
+   private long id;
 
    @Column(nullable = false, unique = true)
-   public String name;
+   private String name;
 
    @Column(nullable = false)
-   public BigDecimal price;
+   private BigDecimal price;
 
    @Column(nullable = false)
-   public short score;
+   private short score;
 
    @Column(nullable = false)
-   public String image;
+   private String image;
 
 }
