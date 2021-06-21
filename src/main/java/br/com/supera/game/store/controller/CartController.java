@@ -1,13 +1,13 @@
 package br.com.supera.game.store.controller;
 
 import br.com.supera.game.store.dto.CartDTO;
+import br.com.supera.game.store.dto.UserDTO;
+import br.com.supera.game.store.exception.UserNotFoundException;
 import br.com.supera.game.store.service.CartService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,5 +25,11 @@ public class CartController {
     @GetMapping("/{cpf}")
     public CartDTO findCartByUserCpf(@PathVariable String cpf) {
         return cartService.findCartByUserCpf(cpf);
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public CartDTO createCart(@RequestBody UserDTO userDTO) throws UserNotFoundException {
+        return cartService.createCart(userDTO);
     }
 }
