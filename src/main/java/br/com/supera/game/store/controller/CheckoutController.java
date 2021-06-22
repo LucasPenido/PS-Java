@@ -1,13 +1,14 @@
 package br.com.supera.game.store.controller;
 
+import br.com.supera.game.store.dto.CartDTO;
 import br.com.supera.game.store.dto.CheckoutDTO;
+import br.com.supera.game.store.exception.CartNotFoundException;
+import br.com.supera.game.store.service.CartService;
 import br.com.supera.game.store.service.CheckoutService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ import java.util.List;
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class CheckoutController {
     private final CheckoutService checkoutService;
+    private final CartService cartService;
 
     @GetMapping
     public List<CheckoutDTO> listCheckouts() {
@@ -30,5 +32,11 @@ public class CheckoutController {
     @GetMapping("/cart/{cartId}")
     public CheckoutDTO findCheckoutByCartId(@PathVariable long cartId) {
         return checkoutService.findChecoutByCartId(cartId);
+    }
+
+    @PostMapping()
+    @ResponseStatus(HttpStatus.CREATED)
+    public CheckoutDTO createCheckout(@RequestBody CartDTO cartDTO) throws CartNotFoundException {
+        return checkoutService.createCheckout(cartDTO);
     }
 }

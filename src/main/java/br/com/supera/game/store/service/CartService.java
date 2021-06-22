@@ -5,6 +5,7 @@ import br.com.supera.game.store.dto.ProductsCartDTO;
 import br.com.supera.game.store.dto.UserDTO;
 import br.com.supera.game.store.entity.Cart;
 import br.com.supera.game.store.entity.ProductsCart;
+import br.com.supera.game.store.exception.CartNotFoundException;
 import br.com.supera.game.store.exception.UserNotFoundException;
 import br.com.supera.game.store.mapper.CartMapper;
 import br.com.supera.game.store.mapper.ProductCartMapper;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -145,5 +147,12 @@ public class CartService {
         }
 
         return cartDTO;
+    }
+
+    public void verifyIfCartExists(long cartId) throws CartNotFoundException {
+        Optional<Cart> optSavedCart = cartRepository.findById(cartId);
+        if (optSavedCart.isEmpty()) {
+            throw new CartNotFoundException(cartId);
+        }
     }
 }
