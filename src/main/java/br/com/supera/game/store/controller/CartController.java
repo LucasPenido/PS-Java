@@ -23,7 +23,7 @@ public class CartController {
         return cartService.findAll();
     }
 
-    @GetMapping("/{cpf}")
+    @GetMapping("/user/{cpf}")
     public CartDTO findCartByUserCpf(@PathVariable String cpf) {
         return cartService.findCartByUserCpf(cpf);
     }
