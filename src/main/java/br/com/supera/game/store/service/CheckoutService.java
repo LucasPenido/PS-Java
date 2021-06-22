@@ -23,4 +23,12 @@ public class CheckoutService {
                 .map(checkoutMapper::toDTO)
                 .collect(Collectors.toList());
     }
+
+    public CheckoutDTO findCheckoutById(long checkoutId) {
+        return checkoutMapper.toDTO(checkoutRepository.getById(checkoutId));
+    }
+
+    public CheckoutDTO findChecoutByCartId(long cartId) {
+        return checkoutMapper.toDTO(checkoutRepository.findByCartId(cartId).orElseThrow());
+    }
 }
